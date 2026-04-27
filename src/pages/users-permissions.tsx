@@ -401,7 +401,7 @@ export function UsersPermissionsPage() {
 
       {/* Edit dialog */}
       <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-md">
           <DialogHeader>
             <DialogTitle>تعديل الصلاحيات</DialogTitle>
             <DialogDescription>
@@ -409,7 +409,7 @@ export function UsersPermissionsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4 py-2">
+          <div className="-mx-6 flex-1 space-y-4 overflow-y-auto px-6 py-2">
             <div className="flex items-center justify-between rounded-md border p-3">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-primary" />
@@ -439,22 +439,35 @@ export function UsersPermissionsPage() {
                       {group.label}
                     </p>
                     <div className="space-y-2">
-                      {group.perms.map((p) => (
-                        <div key={p.value} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`perm-${p.value}`}
-                            checked={draftAdmin || draftPerms.includes(p.value)}
-                            disabled={draftAdmin}
-                            onCheckedChange={() => togglePerm(p.value)}
-                          />
-                          <Label
-                            htmlFor={`perm-${p.value}`}
-                            className="cursor-pointer text-sm font-normal"
-                          >
-                            {p.label}
-                          </Label>
-                        </div>
-                      ))}
+                      {group.perms.map((p) => {
+                        const parentMissing =
+                          !!p.requires && !draftPerms.includes(p.requires)
+                        const lockedByParent = !draftAdmin && parentMissing
+                        const parentLabel = p.requires
+                          ? PERM_MAP.get(p.requires)?.label
+                          : null
+                        return (
+                          <div key={p.value} className="flex items-center gap-2">
+                            <Checkbox
+                              id={`perm-${p.value}`}
+                              checked={draftAdmin || draftPerms.includes(p.value)}
+                              disabled={draftAdmin || lockedByParent}
+                              onCheckedChange={() => togglePerm(p.value)}
+                            />
+                            <Label
+                              htmlFor={`perm-${p.value}`}
+                              className="cursor-pointer text-sm font-normal"
+                            >
+                              {p.label}
+                              {parentLabel && (
+                                <span className="ms-2 text-xs text-muted-foreground">
+                                  (تتطلب: {parentLabel})
+                                </span>
+                              )}
+                            </Label>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 ))}
@@ -497,7 +510,7 @@ export function UsersPermissionsPage() {
           if (!o) resetCreateForm()
         }}
       >
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-md">
           <DialogHeader>
             <DialogTitle>إضافة مستخدم جديد</DialogTitle>
             <DialogDescription>
@@ -505,7 +518,7 @@ export function UsersPermissionsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4 py-2">
+          <div className="-mx-6 flex-1 space-y-4 overflow-y-auto px-6 py-2">
             <div className="space-y-2">
               <Label htmlFor="new-fullname">الاسم الكامل</Label>
               <Input
@@ -567,22 +580,35 @@ export function UsersPermissionsPage() {
                       {group.label}
                     </p>
                     <div className="space-y-2">
-                      {group.perms.map((p) => (
-                        <div key={p.value} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`new-perm-${p.value}`}
-                            checked={newIsAdmin || newPerms.includes(p.value)}
-                            disabled={newIsAdmin}
-                            onCheckedChange={() => toggleNewPerm(p.value)}
-                          />
-                          <Label
-                            htmlFor={`new-perm-${p.value}`}
-                            className="cursor-pointer text-sm font-normal"
-                          >
-                            {p.label}
-                          </Label>
-                        </div>
-                      ))}
+                      {group.perms.map((p) => {
+                        const parentMissing =
+                          !!p.requires && !newPerms.includes(p.requires)
+                        const lockedByParent = !newIsAdmin && parentMissing
+                        const parentLabel = p.requires
+                          ? PERM_MAP.get(p.requires)?.label
+                          : null
+                        return (
+                          <div key={p.value} className="flex items-center gap-2">
+                            <Checkbox
+                              id={`new-perm-${p.value}`}
+                              checked={newIsAdmin || newPerms.includes(p.value)}
+                              disabled={newIsAdmin || lockedByParent}
+                              onCheckedChange={() => toggleNewPerm(p.value)}
+                            />
+                            <Label
+                              htmlFor={`new-perm-${p.value}`}
+                              className="cursor-pointer text-sm font-normal"
+                            >
+                              {p.label}
+                              {parentLabel && (
+                                <span className="ms-2 text-xs text-muted-foreground">
+                                  (تتطلب: {parentLabel})
+                                </span>
+                              )}
+                            </Label>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 ))}
