@@ -44,9 +44,16 @@ interface UserRow {
   permissions: AppPermission[]
 }
 
+type PermDef = {
+  value: AppPermission
+  label: string
+  /** صلاحية يجب تفعيلها قبل تفعيل هذه (مستوى أعلى) */
+  requires?: AppPermission
+}
+
 type PermGroup = {
   label: string
-  perms: { value: AppPermission; label: string }[]
+  perms: PermDef[]
 }
 
 const PERMISSION_GROUPS: PermGroup[] = [
@@ -54,20 +61,57 @@ const PERMISSION_GROUPS: PermGroup[] = [
     label: "لوحة التحكم",
     perms: [
       { value: "view_dashboard", label: "عرض لوحة التحكم" },
-      { value: "export_data", label: "استخراج البيانات" },
+      { value: "export_data", label: "استخراج البيانات", requires: "view_dashboard" },
     ],
   },
   {
     label: "المستخدمين والصلاحيات",
     perms: [
       { value: "view_users", label: "عرض المستخدمين والصلاحيات" },
-      { value: "create_users", label: "إضافة مستخدم جديد" },
-      { value: "manage_users", label: "تعديل وحذف المستخدمين" },
+      { value: "create_users", label: "إضافة مستخدم جديد", requires: "view_users" },
+      { value: "manage_users", label: "تعديل وحذف المستخدمين", requires: "view_users" },
     ],
   },
 ]
 
 const ALL_PERMISSIONS = PERMISSION_GROUPS.flatMap((g) => g.perms)
+const PERM_MAP = new Map(ALL_PERMISSIONS.map((p) => [p.value, p]))
+
+/** يرجّع صلاحية مع كل ما تتطلبه من صلاحيات أعلى */
+function withRequired(perm: AppPermission): AppPermission[] {
+  const out: AppPermission[] = [perm]
+  let cur = PERM_MAP.get(perm)?.requires
+  while (cur) {
+    out.push(cur)
+    cur = PERM_MAP.get(cur)?.requires
+  }
+  return out
+}
+
+/** يرجّع كل الصلاحيات اللي تعتمد على صلاحية معينة (مباشرة أو بسلسلة) */
+function dependentsOf(perm: AppPermission): AppPermission[] {
+  const direct = ALL_PERMISSIONS.filter((p) => p.requires === perm).map((p) => p.value)
+  return direct.flatMap((d) => [d, ...dependentsOf(d)])
+}
+
+/** Toggle صلاحية مع احترام التبعيات (إضافة الأب أو إزالة الأبناء) */
+function togglePermSafe(
+  current: AppPermission[],
+  perm: AppPermission,
+): AppPermission[] {
+  const has = current.includes(perm)
+  if (has) {
+    // إزالة الصلاحية + كل ما يعتمد عليها
+    const toRemove = new Set([perm, ...dependentsOf(perm)])
+    return current.filter((p) => !toRemove.has(p))
+  }
+  // إضافة الصلاحية + كل ما تتطلبه
+  const toAdd = withRequired(perm)
+  const set = new Set(current)
+  toAdd.forEach((p) => set.add(p))
+  return Array.from(set)
+}
+
 
 export function UsersPermissionsPage() {
   const { isAdmin, hasPermission, loading: permLoading } = usePermissions()
@@ -99,9 +143,7 @@ export function UsersPermissionsPage() {
   }
 
   const toggleNewPerm = (p: AppPermission) => {
-    setNewPerms((prev) =>
-      prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p],
-    )
+    setNewPerms((prev) => togglePermSafe(prev, p))
   }
 
   const handleCreate = async () => {
@@ -190,9 +232,7 @@ export function UsersPermissionsPage() {
   }
 
   const togglePerm = (p: AppPermission) => {
-    setDraftPerms((prev) =>
-      prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p],
-    )
+    setDraftPerms((prev) => togglePermSafe(prev, p))
   }
 
   const handleSave = async () => {
@@ -361,7 +401,7 @@ export function UsersPermissionsPage() {
 
       {/* Edit dialog */}
       <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-md">
           <DialogHeader>
             <DialogTitle>تعديل الصلاحيات</DialogTitle>
             <DialogDescription>
@@ -369,7 +409,7 @@ export function UsersPermissionsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4 py-2">
+          <div className="-mx-6 flex-1 space-y-4 overflow-y-auto px-6 py-2">
             <div className="flex items-center justify-between rounded-md border p-3">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-primary" />
@@ -399,22 +439,35 @@ export function UsersPermissionsPage() {
                       {group.label}
                     </p>
                     <div className="space-y-2">
-                      {group.perms.map((p) => (
-                        <div key={p.value} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`perm-${p.value}`}
-                            checked={draftAdmin || draftPerms.includes(p.value)}
-                            disabled={draftAdmin}
-                            onCheckedChange={() => togglePerm(p.value)}
-                          />
-                          <Label
-                            htmlFor={`perm-${p.value}`}
-                            className="cursor-pointer text-sm font-normal"
-                          >
-                            {p.label}
-                          </Label>
-                        </div>
-                      ))}
+                      {group.perms.map((p) => {
+                        const parentMissing =
+                          !!p.requires && !draftPerms.includes(p.requires)
+                        const lockedByParent = !draftAdmin && parentMissing
+                        const parentLabel = p.requires
+                          ? PERM_MAP.get(p.requires)?.label
+                          : null
+                        return (
+                          <div key={p.value} className="flex items-center gap-2">
+                            <Checkbox
+                              id={`perm-${p.value}`}
+                              checked={draftAdmin || draftPerms.includes(p.value)}
+                              disabled={draftAdmin || lockedByParent}
+                              onCheckedChange={() => togglePerm(p.value)}
+                            />
+                            <Label
+                              htmlFor={`perm-${p.value}`}
+                              className="cursor-pointer text-sm font-normal"
+                            >
+                              {p.label}
+                              {parentLabel && (
+                                <span className="ms-2 text-xs text-muted-foreground">
+                                  (تتطلب: {parentLabel})
+                                </span>
+                              )}
+                            </Label>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 ))}
@@ -457,7 +510,7 @@ export function UsersPermissionsPage() {
           if (!o) resetCreateForm()
         }}
       >
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-md">
           <DialogHeader>
             <DialogTitle>إضافة مستخدم جديد</DialogTitle>
             <DialogDescription>
@@ -465,7 +518,7 @@ export function UsersPermissionsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4 py-2">
+          <div className="-mx-6 flex-1 space-y-4 overflow-y-auto px-6 py-2">
             <div className="space-y-2">
               <Label htmlFor="new-fullname">الاسم الكامل</Label>
               <Input
@@ -527,22 +580,35 @@ export function UsersPermissionsPage() {
                       {group.label}
                     </p>
                     <div className="space-y-2">
-                      {group.perms.map((p) => (
-                        <div key={p.value} className="flex items-center gap-2">
-                          <Checkbox
-                            id={`new-perm-${p.value}`}
-                            checked={newIsAdmin || newPerms.includes(p.value)}
-                            disabled={newIsAdmin}
-                            onCheckedChange={() => toggleNewPerm(p.value)}
-                          />
-                          <Label
-                            htmlFor={`new-perm-${p.value}`}
-                            className="cursor-pointer text-sm font-normal"
-                          >
-                            {p.label}
-                          </Label>
-                        </div>
-                      ))}
+                      {group.perms.map((p) => {
+                        const parentMissing =
+                          !!p.requires && !newPerms.includes(p.requires)
+                        const lockedByParent = !newIsAdmin && parentMissing
+                        const parentLabel = p.requires
+                          ? PERM_MAP.get(p.requires)?.label
+                          : null
+                        return (
+                          <div key={p.value} className="flex items-center gap-2">
+                            <Checkbox
+                              id={`new-perm-${p.value}`}
+                              checked={newIsAdmin || newPerms.includes(p.value)}
+                              disabled={newIsAdmin || lockedByParent}
+                              onCheckedChange={() => toggleNewPerm(p.value)}
+                            />
+                            <Label
+                              htmlFor={`new-perm-${p.value}`}
+                              className="cursor-pointer text-sm font-normal"
+                            >
+                              {p.label}
+                              {parentLabel && (
+                                <span className="ms-2 text-xs text-muted-foreground">
+                                  (تتطلب: {parentLabel})
+                                </span>
+                              )}
+                            </Label>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 ))}
