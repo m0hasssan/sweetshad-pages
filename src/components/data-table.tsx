@@ -122,24 +122,24 @@ export function DataTable<T>({
     <div className="space-y-4">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={onRefresh}>
-            <RotateCw className="h-4 w-4" />
-            <span>تحديث</span>
-          </Button>
-          <Button variant="outline" size="sm" onClick={onFilter}>
-            <Filter className="h-4 w-4" />
-            <span>فلترة</span>
-          </Button>
-        </div>
         <div className="relative w-full max-w-sm">
-          <Search className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={searchPlaceholder}
-            className="pe-9"
+            className="ps-9"
           />
+        </div>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={onFilter}>
+            <Filter className="h-4 w-4" />
+            <span>فلترة</span>
+          </Button>
+          <Button variant="outline" size="sm" onClick={onRefresh}>
+            <RotateCw className="h-4 w-4" />
+            <span>تحديث</span>
+          </Button>
         </div>
       </div>
 
