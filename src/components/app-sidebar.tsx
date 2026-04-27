@@ -23,7 +23,7 @@ type Item = {
 const items: Item[] = [
   { title: "الرئيسية", url: "/dashboard", icon: Home },
   { title: "لوحة التحكم", url: "/control-panel", icon: LayoutDashboard, requires: "view_dashboard" },
-  { title: "المستخدمين والصلاحيات", url: "/users-permissions", icon: ShieldCheck },
+  { title: "المستخدمين والصلاحيات", url: "/users-permissions", icon: ShieldCheck, requires: "view_users" },
 ]
 
 export function AppSidebar() {

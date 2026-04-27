@@ -43,13 +43,35 @@ interface UserRow {
   permissions: AppPermission[]
 }
 
-const ALL_PERMISSIONS: { value: AppPermission; label: string }[] = [
-  { value: "view_dashboard", label: "عرض لوحة التحكم" },
-  { value: "export_data", label: "استخراج البيانات" },
+type PermGroup = {
+  label: string
+  perms: { value: AppPermission; label: string }[]
+}
+
+const PERMISSION_GROUPS: PermGroup[] = [
+  {
+    label: "لوحة التحكم",
+    perms: [
+      { value: "view_dashboard", label: "عرض لوحة التحكم" },
+      { value: "export_data", label: "استخراج البيانات" },
+    ],
+  },
+  {
+    label: "المستخدمين والصلاحيات",
+    perms: [
+      { value: "view_users", label: "عرض المستخدمين والصلاحيات" },
+      { value: "create_users", label: "إضافة مستخدم جديد" },
+      { value: "manage_users", label: "تعديل وحذف المستخدمين" },
+    ],
+  },
 ]
 
+const ALL_PERMISSIONS = PERMISSION_GROUPS.flatMap((g) => g.perms)
+
 export function UsersPermissionsPage() {
-  const { isAdmin, loading: permLoading } = usePermissions()
+  const { isAdmin, hasPermission, loading: permLoading } = usePermissions()
+  const canManage = isAdmin || hasPermission("manage_users")
+  const canCreate = isAdmin || hasPermission("create_users")
   const [users, setUsers] = React.useState<UserRow[]>([])
   const [loading, setLoading] = React.useState(true)
   const [editing, setEditing] = React.useState<UserRow | null>(null)
@@ -222,7 +244,7 @@ export function UsersPermissionsPage() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-44">
-            <DropdownMenuItem onSelect={() => openEdit(row)} disabled={!isAdmin}>
+            <DropdownMenuItem onSelect={() => openEdit(row)} disabled={!canManage}>
               <Pencil />
               <span>تعديل الصلاحيات</span>
             </DropdownMenuItem>
@@ -230,7 +252,7 @@ export function UsersPermissionsPage() {
             <DropdownMenuItem
               variant="destructive"
               onSelect={() => setDeleting(row)}
-              disabled={!isAdmin}
+              disabled={!canManage}
             >
               <Trash2 />
               <span>حذف</span>
@@ -247,16 +269,16 @@ export function UsersPermissionsPage() {
         title="المستخدمين والصلاحيات"
         description="إدارة جميع مستخدمي النظام وصلاحياتهم"
         actions={
-          <Button disabled>
+          <Button disabled={!canCreate} onClick={() => toast.info("سيتم إضافة هذه الميزة قريباً")}>
             <Plus className="h-4 w-4" />
             <span>إضافة مستخدم</span>
           </Button>
         }
       />
 
-      {!permLoading && !isAdmin && (
+      {!permLoading && !canManage && (
         <div className="rounded-md border border-dashed bg-muted/30 p-3 text-sm text-muted-foreground">
-          أنت تعرض البيانات بصلاحيات محدودة. التعديل والحذف متاح للمسؤولين فقط.
+          أنت تعرض البيانات بصلاحيات محدودة. التعديل والحذف يتطلب صلاحية «تعديل وحذف المستخدمين».
         </div>
       )}
 
@@ -304,23 +326,33 @@ export function UsersPermissionsPage() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               <Label className="text-sm font-medium">الصلاحيات الفردية</Label>
-              <div className="space-y-2 rounded-md border p-3">
-                {ALL_PERMISSIONS.map((p) => (
-                  <div key={p.value} className="flex items-center gap-2">
-                    <Checkbox
-                      id={`perm-${p.value}`}
-                      checked={draftAdmin || draftPerms.includes(p.value)}
-                      disabled={draftAdmin}
-                      onCheckedChange={() => togglePerm(p.value)}
-                    />
-                    <Label
-                      htmlFor={`perm-${p.value}`}
-                      className="cursor-pointer text-sm font-normal"
-                    >
-                      {p.label}
-                    </Label>
+              <div className="space-y-3 rounded-md border p-3">
+                {PERMISSION_GROUPS.map((group, gi) => (
+                  <div key={group.label} className="space-y-2">
+                    {gi > 0 && <div className="border-t" />}
+                    <p className="text-xs font-semibold text-muted-foreground">
+                      {group.label}
+                    </p>
+                    <div className="space-y-2">
+                      {group.perms.map((p) => (
+                        <div key={p.value} className="flex items-center gap-2">
+                          <Checkbox
+                            id={`perm-${p.value}`}
+                            checked={draftAdmin || draftPerms.includes(p.value)}
+                            disabled={draftAdmin}
+                            onCheckedChange={() => togglePerm(p.value)}
+                          />
+                          <Label
+                            htmlFor={`perm-${p.value}`}
+                            className="cursor-pointer text-sm font-normal"
+                          >
+                            {p.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>

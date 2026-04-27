@@ -2,7 +2,12 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/integrations/supabase/client"
 import { useAuth } from "@/contexts/auth-context"
 
-export type AppPermission = "view_dashboard" | "export_data"
+export type AppPermission =
+  | "view_dashboard"
+  | "export_data"
+  | "view_users"
+  | "manage_users"
+  | "create_users"
 export type AppRole = "admin" | "user"
 
 interface UserAccess {
