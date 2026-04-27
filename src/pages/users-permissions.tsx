@@ -143,9 +143,7 @@ export function UsersPermissionsPage() {
   }
 
   const toggleNewPerm = (p: AppPermission) => {
-    setNewPerms((prev) =>
-      prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p],
-    )
+    setNewPerms((prev) => togglePermSafe(prev, p))
   }
 
   const handleCreate = async () => {
@@ -234,9 +232,7 @@ export function UsersPermissionsPage() {
   }
 
   const togglePerm = (p: AppPermission) => {
-    setDraftPerms((prev) =>
-      prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p],
-    )
+    setDraftPerms((prev) => togglePermSafe(prev, p))
   }
 
   const handleSave = async () => {
