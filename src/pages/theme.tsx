@@ -1,7 +1,4 @@
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 const buttonVariants = ["default", "secondary", "outline", "ghost", "destructive", "link"] as const
 const buttonSizes = ["xs", "sm", "default", "lg"] as const
@@ -57,8 +54,6 @@ function Section({
 }
 
 export function ThemePage() {
-  const [name, setName] = useState("")
-
   return (
     <div className="mx-auto max-w-5xl px-6 py-10">
       <header className="mb-8">
