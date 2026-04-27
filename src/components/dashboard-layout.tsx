@@ -64,21 +64,28 @@ export function DashboardLayout() {
                     </Avatar>
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56 p-2">
-                  <div className="flex flex-col gap-0.5 px-2 py-1.5">
-                    <span className="truncate text-sm font-medium">
-                      {getName(user?.email)}
-                    </span>
-                    <span className="truncate text-xs text-muted-foreground" dir="ltr">
-                      {user?.email}
-                    </span>
+                <DropdownMenuContent align="start" className="w-72 p-2">
+                  <div className="flex items-center gap-3 px-2 py-1.5">
+                    <Avatar className="h-10 w-10 shrink-0">
+                      <AvatarFallback className="text-sm font-medium">
+                        {getInitials(user?.email)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex min-w-0 flex-1 items-baseline gap-2">
+                      <span className="truncate text-sm font-semibold">
+                        {getName(user?.email)}
+                      </span>
+                      <span className="truncate text-xs text-muted-foreground" dir="ltr">
+                        {user?.email}
+                      </span>
+                    </div>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem disabled>
                     <Settings />
                     <span>إعدادات حسابي</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={handleLogout}>
+                  <DropdownMenuItem variant="destructive" onSelect={handleLogout}>
                     <LogOut />
                     <span>تسجيل الخروج</span>
                   </DropdownMenuItem>
