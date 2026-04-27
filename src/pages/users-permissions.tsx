@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -79,6 +80,68 @@ export function UsersPermissionsPage() {
   const [draftPerms, setDraftPerms] = React.useState<AppPermission[]>([])
   const [draftAdmin, setDraftAdmin] = React.useState(false)
   const [saving, setSaving] = React.useState(false)
+
+  // Create user dialog state
+  const [createOpen, setCreateOpen] = React.useState(false)
+  const [creating, setCreating] = React.useState(false)
+  const [newEmail, setNewEmail] = React.useState("")
+  const [newFullName, setNewFullName] = React.useState("")
+  const [newPassword, setNewPassword] = React.useState("")
+  const [newIsAdmin, setNewIsAdmin] = React.useState(false)
+  const [newPerms, setNewPerms] = React.useState<AppPermission[]>([])
+
+  const resetCreateForm = () => {
+    setNewEmail("")
+    setNewFullName("")
+    setNewPassword("")
+    setNewIsAdmin(false)
+    setNewPerms([])
+  }
+
+  const toggleNewPerm = (p: AppPermission) => {
+    setNewPerms((prev) =>
+      prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p],
+    )
+  }
+
+  const handleCreate = async () => {
+    if (!newEmail.trim() || !newPassword) {
+      toast.error("الرجاء إدخال البريد وكلمة المرور")
+      return
+    }
+    if (newPassword.length < 6) {
+      toast.error("كلمة المرور يجب أن تكون 6 أحرف فأكثر")
+      return
+    }
+    setCreating(true)
+    try {
+      const { data, error } = await supabase.functions.invoke(
+        "admin-create-user",
+        {
+          body: {
+            email: newEmail.trim(),
+            password: newPassword,
+            full_name: newFullName.trim() || undefined,
+            is_admin: newIsAdmin,
+            permissions: newIsAdmin ? [] : newPerms,
+          },
+        },
+      )
+      if (error) throw error
+      const payload = data as { error?: string; success?: boolean }
+      if (payload?.error) throw new Error(payload.error)
+      toast.success("تم إنشاء المستخدم بنجاح")
+      setCreateOpen(false)
+      resetCreateForm()
+      await loadUsers()
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "فشل إنشاء المستخدم"
+      toast.error(msg)
+    } finally {
+      setCreating(false)
+    }
+  }
+
 
   const loadUsers = React.useCallback(async () => {
     setLoading(true)
@@ -269,7 +332,7 @@ export function UsersPermissionsPage() {
         title="المستخدمين والصلاحيات"
         description="إدارة جميع مستخدمي النظام وصلاحياتهم"
         actions={
-          <Button disabled={!canCreate} onClick={() => toast.info("سيتم إضافة هذه الميزة قريباً")}>
+          <Button disabled={!canCreate} onClick={() => setCreateOpen(true)}>
             <Plus className="h-4 w-4" />
             <span>إضافة مستخدم</span>
           </Button>
@@ -385,6 +448,118 @@ export function UsersPermissionsPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Create user dialog */}
+      <Dialog
+        open={createOpen}
+        onOpenChange={(o) => {
+          setCreateOpen(o)
+          if (!o) resetCreateForm()
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>إضافة مستخدم جديد</DialogTitle>
+            <DialogDescription>
+              أدخل بيانات المستخدم وحدد صلاحياته
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-2">
+            <div className="space-y-2">
+              <Label htmlFor="new-fullname">الاسم الكامل</Label>
+              <Input
+                id="new-fullname"
+                value={newFullName}
+                onChange={(e) => setNewFullName(e.target.value)}
+                placeholder="مثال: محمد أحمد"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="new-email">البريد الإلكتروني</Label>
+              <Input
+                id="new-email"
+                type="email"
+                dir="ltr"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="user@example.com"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="new-password">كلمة المرور</Label>
+              <Input
+                id="new-password"
+                type="text"
+                dir="ltr"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="6 أحرف على الأقل"
+              />
+            </div>
+
+            <div className="flex items-center justify-between rounded-md border p-3">
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4 text-primary" />
+                <div>
+                  <Label htmlFor="new-admin" className="cursor-pointer">
+                    صلاحيات المسؤول
+                  </Label>
+                  <p className="text-xs text-muted-foreground">
+                    وصول كامل لكل الصلاحيات
+                  </p>
+                </div>
+              </div>
+              <Checkbox
+                id="new-admin"
+                checked={newIsAdmin}
+                onCheckedChange={(v) => setNewIsAdmin(!!v)}
+              />
+            </div>
+
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">الصلاحيات الفردية</Label>
+              <div className="space-y-3 rounded-md border p-3">
+                {PERMISSION_GROUPS.map((group, gi) => (
+                  <div key={group.label} className="space-y-2">
+                    {gi > 0 && <div className="border-t" />}
+                    <p className="text-xs font-semibold text-muted-foreground">
+                      {group.label}
+                    </p>
+                    <div className="space-y-2">
+                      {group.perms.map((p) => (
+                        <div key={p.value} className="flex items-center gap-2">
+                          <Checkbox
+                            id={`new-perm-${p.value}`}
+                            checked={newIsAdmin || newPerms.includes(p.value)}
+                            disabled={newIsAdmin}
+                            onCheckedChange={() => toggleNewPerm(p.value)}
+                          />
+                          <Label
+                            htmlFor={`new-perm-${p.value}`}
+                            className="cursor-pointer text-sm font-normal"
+                          >
+                            {p.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCreateOpen(false)}>
+              إلغاء
+            </Button>
+            <Button onClick={handleCreate} disabled={creating}>
+              {creating ? "جارٍ الإنشاء..." : "إنشاء المستخدم"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
