@@ -1,4 +1,4 @@
-import { Home, ShieldCheck } from "lucide-react"
+import { Home, LayoutDashboard, ShieldCheck } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
   Sidebar,
@@ -13,6 +13,7 @@ import {
 
 const items = [
   { title: "الرئيسية", url: "/dashboard", icon: Home },
+  { title: "لوحة التحكم", url: "/control-panel", icon: LayoutDashboard },
   { title: "المستخدمين والصلاحيات", url: "/users-permissions", icon: ShieldCheck },
 ]
 
