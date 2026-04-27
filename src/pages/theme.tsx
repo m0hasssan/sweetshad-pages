@@ -384,7 +384,9 @@ export function ThemePage() {
               <InputGroup>
                 <InputGroupAddon><AtSignIcon /></InputGroupAddon>
                 <InputGroupInput id="ig-mail" placeholder="username" />
-                <InputGroupText>@example.com</InputGroupText>
+                <InputGroupAddon align="inline-end">
+                  <InputGroupText>@example.com</InputGroupText>
+                </InputGroupAddon>
               </InputGroup>
             </Field>
             <Field>
