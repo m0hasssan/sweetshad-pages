@@ -18,12 +18,11 @@ import {
 } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
+import { PanelLeftIcon } from "lucide-react"
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
-
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"
@@ -270,14 +269,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <IconPlaceholder
-        lucide="PanelLeftIcon"
-        tabler="IconLayoutSidebar"
-        hugeicons="SidebarLeftIcon"
-        phosphor="SidebarIcon"
-        remixicon="RiSideBarLine"
-        className="cn-rtl-flip"
-      />
+      <PanelLeftIcon className="cn-rtl-flip" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

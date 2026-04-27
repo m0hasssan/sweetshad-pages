@@ -10,8 +10,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
-
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 function Calendar({
   className,
   classNames,
@@ -147,42 +146,18 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
             return (
-              <IconPlaceholder
-                lucide="ChevronLeftIcon"
-                tabler="IconChevronLeft"
-                hugeicons="ArrowLeftIcon"
-                phosphor="CaretLeftIcon"
-                remixicon="RiArrowLeftSLine"
-                className={cn("cn-rtl-flip size-4", className)}
-                {...props}
-              />
+              <ChevronLeftIcon className={cn("cn-rtl-flip size-4", className)} props />
             )
           }
 
           if (orientation === "right") {
             return (
-              <IconPlaceholder
-                lucide="ChevronRightIcon"
-                tabler="IconChevronRight"
-                hugeicons="ArrowRightIcon"
-                phosphor="CaretRightIcon"
-                remixicon="RiArrowRightSLine"
-                className={cn("cn-rtl-flip size-4", className)}
-                {...props}
-              />
+              <ChevronRightIcon className={cn("cn-rtl-flip size-4", className)} props />
             )
           }
 
           return (
-            <IconPlaceholder
-              lucide="ChevronDownIcon"
-              tabler="IconChevronDown"
-              hugeicons="ArrowDownIcon"
-              phosphor="CaretDownIcon"
-              remixicon="RiArrowDownSLine"
-              className={cn("size-4", className)}
-              {...props}
-            />
+            <ChevronDownIcon className={cn("size-4", className)} props />
           )
         },
         DayButton: ({ ...props }) => (
