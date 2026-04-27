@@ -101,7 +101,12 @@ export type Database = {
       }
     }
     Enums: {
-      app_permission: "view_dashboard" | "export_data"
+      app_permission:
+        | "view_dashboard"
+        | "export_data"
+        | "view_users"
+        | "manage_users"
+        | "create_users"
       app_role: "admin" | "user"
     }
     CompositeTypes: {
@@ -230,7 +235,13 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_permission: ["view_dashboard", "export_data"],
+      app_permission: [
+        "view_dashboard",
+        "export_data",
+        "view_users",
+        "manage_users",
+        "create_users",
+      ],
       app_role: ["admin", "user"],
     },
   },
