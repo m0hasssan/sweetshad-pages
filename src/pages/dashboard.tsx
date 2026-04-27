@@ -1,38 +1,20 @@
-import { useAuth } from "@/contexts/auth-context"
+import { Construction } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
 export function DashboardHome() {
-  const { user } = useAuth()
-  const name =
-    (user?.user_metadata?.full_name as string | undefined) ||
-    (user?.user_metadata?.name as string | undefined) ||
-    user?.email?.split("@")[0] ||
-    "بك"
-
   return (
-    <div className="flex min-h-[calc(100vh-8rem)] flex-col items-center justify-center text-center">
-      <span
-        className="text-8xl md:text-9xl"
-        role="img"
-        aria-label="waving hand"
-        style={{ animation: "wave 2s ease-in-out infinite", transformOrigin: "70% 70%", display: "inline-block" }}
-      >
-        👋
-      </span>
-      <h1 className="mt-6 text-4xl md:text-6xl font-bold">
-        مرحباً {name}
-      </h1>
-      <p className="mt-4 text-lg md:text-2xl text-muted-foreground">
-        قم بتصفح القائمة الجانبية لعرض الأقسام المتاحة لك
-      </p>
-      <style>{`
-        @keyframes wave {
-          0%, 60%, 100% { transform: rotate(0deg); }
-          10%, 30% { transform: rotate(14deg); }
-          20% { transform: rotate(-8deg); }
-          40% { transform: rotate(-4deg); }
-          50% { transform: rotate(10deg); }
-        }
-      `}</style>
+    <div className="mx-auto max-w-3xl">
+      <Card>
+        <CardContent className="flex flex-col items-center justify-center gap-4 py-16 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Construction className="h-8 w-8" />
+          </div>
+          <h2 className="text-2xl font-semibold">قيد الإنشاء</h2>
+          <p className="max-w-md text-sm text-muted-foreground">
+            هذه الصفحة قيد التطوير حالياً. سنقوم بإضافة المحتوى قريباً بإذن الله.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   )
 }
