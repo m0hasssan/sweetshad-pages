@@ -265,7 +265,7 @@ export function ThemePage() {
           </Row>
           <Row label="مع أيقونات">
             <Button><SendIcon />إرسال</Button>
-            <Button variant="outline">التالي<ChevronRightIcon className="rtl:-scale-x-100" /></Button>
+            <Button variant="outline">التالي<ChevronRightIcon className="rtl:rotate-180" /></Button>
             <Button variant="secondary"><Loader2Icon className="animate-spin" />جاري التحميل</Button>
           </Row>
           <Row label="States">
@@ -610,7 +610,7 @@ export function ThemePage() {
         <Section id="collapsible" title="Collapsible">
           <Collapsible className="w-full max-w-lg">
             <CollapsibleTrigger asChild>
-              <Button variant="outline"><ChevronRightIcon className="rtl:-scale-x-100" />اضغط لإظهار المزيد</Button>
+              <Button variant="outline"><ChevronRightIcon className="rtl:rotate-180" />اضغط لإظهار المزيد</Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-2">
               <div className="border-border rounded-md border p-3 text-sm">محتوى مخفي يظهر عند الضغط.</div>
@@ -684,7 +684,7 @@ export function ThemePage() {
 
         <Section id="dropdown-menu" title="Dropdown Menu">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild><Button variant="outline">خيارات <ChevronRightIcon className="rtl:-scale-x-100" /></Button></DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild><Button variant="outline">خيارات <ChevronRightIcon className="rtl:rotate-180" /></Button></DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>حسابي</DropdownMenuLabel>
               <DropdownMenuSeparator />
