@@ -118,37 +118,6 @@ export function ThemePage() {
           </div>
         </Section>
 
-        {/* Input + Label */}
-        <Section title="Input + Label" description="حقول الإدخال">
-          <div className="grid max-w-md gap-4">
-            <div className="grid gap-1.5">
-              <Label htmlFor="name">الاسم</Label>
-              <Input
-                id="name"
-                placeholder="اكتب اسمك..."
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {name && (
-                <p className="text-muted-foreground text-xs">
-                  أهلاً، <span className="text-foreground font-medium">{name}</span> 👋
-                </p>
-              )}
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" />
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="disabled">Disabled</Label>
-              <Input id="disabled" placeholder="معطّل" disabled />
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="invalid">Invalid</Label>
-              <Input id="invalid" placeholder="قيمة خاطئة" aria-invalid="true" />
-            </div>
-          </div>
-        </Section>
 
         {/* Color tokens */}
         <Section title="Color Tokens" description="ألوان الـ theme الأساسية">
