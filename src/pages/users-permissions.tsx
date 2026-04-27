@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { DataTable, type DataTableColumn } from "@/components/data-table"
+import { PageHeader } from "@/components/page-header"
 import { toast } from "sonner"
 
 interface UserRow {
@@ -99,18 +100,16 @@ export function UsersPermissionsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-primary">المستخدمين والصلاحيات</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            إدارة جميع مستخدمي النظام وصلاحياتهم
-          </p>
-        </div>
-        <Button>
-          <Plus className="h-4 w-4" />
-          <span>إضافة مستخدم</span>
-        </Button>
-      </div>
+      <PageHeader
+        title="المستخدمين والصلاحيات"
+        description="إدارة جميع مستخدمي النظام وصلاحياتهم"
+        actions={
+          <Button>
+            <Plus className="h-4 w-4" />
+            <span>إضافة مستخدم</span>
+          </Button>
+        }
+      />
 
       <DataTable
         data={users}
