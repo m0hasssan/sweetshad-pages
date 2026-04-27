@@ -38,10 +38,6 @@ export function AppSidebar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-semibold">
             ل
           </div>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold">لوحة التحكم</span>
-            <span className="text-xs text-muted-foreground">الإدارة</span>
-          </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
