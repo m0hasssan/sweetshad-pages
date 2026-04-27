@@ -25,7 +25,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>القائمة</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-2">
+            <SidebarMenu className="gap-0">
               {items.map((item) => {
                 const isActive = location.pathname === item.url
                 return (
