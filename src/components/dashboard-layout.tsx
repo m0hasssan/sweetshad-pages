@@ -71,7 +71,7 @@ export function DashboardLayout() {
                         {getInitials(user?.email)}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex min-w-0 flex-1 items-baseline gap-2">
+                    <div className="flex min-w-0 flex-1 flex-col text-right">
                       <span className="truncate text-sm font-semibold">
                         {getName(user?.email)}
                       </span>
