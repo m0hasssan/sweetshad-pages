@@ -19,6 +19,9 @@ export function Navbar() {
           <NavLink to="/about" className={linkClass}>
             About
           </NavLink>
+          <NavLink to="/playground" className={linkClass}>
+            Playground
+          </NavLink>
         </div>
       </nav>
     </header>
