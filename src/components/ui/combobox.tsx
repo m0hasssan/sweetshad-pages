@@ -6,12 +6,12 @@ import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
-import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react"
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
+import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react"
 const Combobox = ComboboxPrimitive.Root
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {

@@ -12,10 +12,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import {
-import { CheckIcon, SearchIcon } from "lucide-react"
   InputGroup,
   InputGroupAddon,
 } from "@/components/ui/input-group"
+import { CheckIcon, SearchIcon } from "lucide-react"
 function Command({
   className,
   ...props
