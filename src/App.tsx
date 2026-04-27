@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Navbar } from "@/components/navbar"
 import HomePage from "@/pages/home"
 import AboutPage from "@/pages/about"
-import PlaygroundPage from "@/pages/playground"
+import ThemePage from "@/pages/theme"
 
 export function App() {
   return (
@@ -12,7 +12,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/playground" element={<PlaygroundPage />} />
+          <Route path="/theme" element={<ThemePage />} />
         </Routes>
       </div>
     </BrowserRouter>
