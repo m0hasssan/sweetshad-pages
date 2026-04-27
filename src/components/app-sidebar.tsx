@@ -20,7 +20,7 @@ export function AppSidebar() {
   const location = useLocation()
 
   return (
-    <Sidebar side="right" collapsible="icon">
+    <Sidebar side="right" collapsible="icon" className="border-s border-border">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>القائمة</SidebarGroupLabel>
