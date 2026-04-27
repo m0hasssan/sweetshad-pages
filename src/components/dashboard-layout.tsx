@@ -1,19 +1,33 @@
-import { Outlet } from "react-router-dom"
-import { Bell, Settings, Moon, Sun } from "lucide-react"
+import { Outlet, useNavigate } from "react-router-dom"
+import { Bell, Settings, Moon, Sun, LogOut } from "lucide-react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useAuth } from "@/contexts/auth-context"
 import { useTheme } from "@/components/theme-provider"
+import { toast } from "sonner"
 
 function getInitials(email: string | undefined) {
   if (!email) return "؟"
   return email.charAt(0).toUpperCase()
 }
 
+function getName(email: string | undefined) {
+  if (!email) return "مستخدم"
+  return email.split("@")[0]
+}
+
 export function DashboardLayout() {
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
+  const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const isDark =
     theme === "dark" ||
@@ -23,6 +37,12 @@ export function DashboardLayout() {
 
   const toggleTheme = () => setTheme(isDark ? "light" : "dark")
 
+  const handleLogout = async () => {
+    await signOut()
+    toast.success("تم تسجيل الخروج")
+    navigate("/login", { replace: true })
+  }
+
   return (
     <SidebarProvider>
       <div className="flex min-h-svh w-full">
@@ -31,11 +51,39 @@ export function DashboardLayout() {
           <header className="flex h-14 items-center justify-between gap-3 border-b bg-background px-4">
             <div className="flex items-center gap-2">
               <SidebarTrigger />
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="text-xs font-medium">
-                  {getInitials(user?.email)}
-                </AvatarFallback>
-              </Avatar>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="rounded-full outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                    aria-label="حساب المستخدم"
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="text-xs font-medium">
+                        {getInitials(user?.email)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 p-2">
+                  <div className="flex flex-col gap-0.5 px-2 py-1.5">
+                    <span className="truncate text-sm font-medium">
+                      {getName(user?.email)}
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground" dir="ltr">
+                      {user?.email}
+                    </span>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem disabled>
+                    <Settings />
+                    <span>إعدادات حسابي</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={handleLogout}>
+                    <LogOut />
+                    <span>تسجيل الخروج</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             <div className="flex items-center gap-1">
               <Button variant="ghost" size="icon" disabled aria-label="الإشعارات">
