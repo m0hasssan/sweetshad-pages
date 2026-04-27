@@ -11,7 +11,6 @@ import {
   CopyIcon,
   CreditCardIcon,
   EyeIcon,
-  EyeOffIcon,
   FileIcon,
   FolderIcon,
   HeartIcon,
@@ -105,6 +104,7 @@ import {
 } from "@/components/ui/empty"
 import {
   Field,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldGroup,
