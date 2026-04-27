@@ -1,20 +1,31 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Navbar } from "@/components/navbar"
-import HomePage from "@/pages/home"
-import AboutPage from "@/pages/about"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { AuthProvider } from "@/contexts/auth-context"
+import { ProtectedRoute } from "@/components/protected-route"
+import { DashboardLayout } from "@/components/dashboard-layout"
+import LoginPage from "@/pages/login"
+import DashboardHome from "@/pages/dashboard"
 import ThemePage from "@/pages/theme"
 
 export function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-svh">
-        <Navbar />
+      <AuthProvider>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/theme" element={<ThemePage />} />
+          <Route
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/dashboard" element={<DashboardHome />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
-      </div>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
