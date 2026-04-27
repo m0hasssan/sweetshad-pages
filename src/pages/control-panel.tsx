@@ -1,7 +1,8 @@
-import { Download } from "lucide-react"
+import { Download, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { StatsCard } from "@/components/stats-card"
 import { PageHeader } from "@/components/page-header"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   Select,
   SelectContent,
@@ -9,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { usePermissions } from "@/hooks/use-permissions"
+import { toast } from "sonner"
 
 const cards = Array.from({ length: 8 }).map(() => ({
   title: "إجمالي المبيعات ( كاش )",
@@ -19,6 +22,37 @@ const cards = Array.from({ length: 8 }).map(() => ({
 }))
 
 export function ControlPanelPage() {
+  const { hasPermission, loading } = usePermissions()
+
+  const canView = hasPermission("view_dashboard")
+  const canExport = hasPermission("export_data")
+
+  if (loading) {
+    return (
+      <div className="flex h-64 items-center justify-center text-sm text-muted-foreground">
+        جارٍ التحقق من الصلاحيات...
+      </div>
+    )
+  }
+
+  if (!canView) {
+    return (
+      <div className="mx-auto max-w-md">
+        <Card>
+          <CardContent className="flex flex-col items-center justify-center gap-4 py-16 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+              <Lock className="h-8 w-8" />
+            </div>
+            <h2 className="text-xl font-semibold">لا تملك الصلاحية</h2>
+            <p className="max-w-sm text-sm text-muted-foreground">
+              ليس لديك صلاحية «عرض لوحة التحكم». يُرجى التواصل مع مسؤول النظام.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
@@ -36,7 +70,15 @@ export function ControlPanelPage() {
                 <SelectItem value="month">هذا الشهر</SelectItem>
               </SelectContent>
             </Select>
-            <Button className="gap-2">
+            <Button
+              className="gap-2"
+              disabled={!canExport}
+              onClick={() => {
+                if (!canExport) return
+                toast.success("جارٍ استخراج البيانات...")
+              }}
+              title={!canExport ? "لا تملك صلاحية استخراج البيانات" : undefined}
+            >
               <Download className="h-4 w-4" />
               استخراج البيانات
             </Button>
