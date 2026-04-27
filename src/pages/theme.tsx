@@ -245,20 +245,15 @@ export function ThemePage() {
       </header>
 
       <div className="flex flex-col gap-6">
-        {/* ========== BUTTON ========== */}
-        <Section id="button" title="Button" description="كل الـ variants والـ sizes والحالات">
+        <Section id="button" title="Button">
           <Row label="Variants">
             {buttonVariants.map((v) => (
-              <Button key={v} variant={v}>
-                {v}
-              </Button>
+              <Button key={v} variant={v}>{v}</Button>
             ))}
           </Row>
           <Row label="Sizes">
             {buttonSizes.map((s) => (
-              <Button key={s} size={s}>
-                مقاس {s}
-              </Button>
+              <Button key={s} size={s}>مقاس {s}</Button>
             ))}
           </Row>
           <Row label="Icon Sizes">
@@ -268,19 +263,10 @@ export function ThemePage() {
               </Button>
             ))}
           </Row>
-          <Row label="مع أيقونات (تنعكس مع RTL تلقائياً)">
-            <Button>
-              <SendIcon />
-              إرسال
-            </Button>
-            <Button variant="outline">
-              التالي
-              <ChevronRightIcon className="rtl:-scale-x-100" />
-            </Button>
-            <Button variant="secondary">
-              <Loader2Icon className="animate-spin" />
-              جاري التحميل
-            </Button>
+          <Row label="مع أيقونات">
+            <Button><SendIcon />إرسال</Button>
+            <Button variant="outline">التالي<ChevronRightIcon className="rtl:-scale-x-100" /></Button>
+            <Button variant="secondary"><Loader2Icon className="animate-spin" />جاري التحميل</Button>
           </Row>
           <Row label="States">
             <Button>عادي</Button>
@@ -289,8 +275,7 @@ export function ThemePage() {
           </Row>
         </Section>
 
-        {/* ========== BUTTON GROUP ========== */}
-        <Section id="button-group" title="Button Group" description="مجموعات الأزرار">
+        <Section id="button-group" title="Button Group">
           <Row label="Horizontal">
             <ButtonGroup>
               <Button variant="outline">يمين</Button>
@@ -298,15 +283,11 @@ export function ThemePage() {
               <Button variant="outline">يسار</Button>
             </ButtonGroup>
           </Row>
-          <Row label="مع نص بين الأزرار">
+          <Row label="مع separator و text">
             <ButtonGroup>
-              <Button variant="outline">
-                <PlusIcon /> إضافة
-              </Button>
+              <Button variant="outline"><PlusIcon /> إضافة</Button>
               <ButtonGroupSeparator />
-              <Button variant="outline" size="icon" aria-label="more">
-                <MoreHorizontalIcon />
-              </Button>
+              <Button variant="outline" size="icon" aria-label="more"><MoreHorizontalIcon /></Button>
             </ButtonGroup>
             <ButtonGroup>
               <ButtonGroupText>https://</ButtonGroupText>
@@ -315,42 +296,26 @@ export function ThemePage() {
           </Row>
           <Row label="Vertical">
             <ButtonGroup orientation="vertical">
-              <Button variant="outline">
-                <HomeIcon /> الرئيسية
-              </Button>
-              <Button variant="outline">
-                <UserIcon /> الحساب
-              </Button>
-              <Button variant="outline">
-                <SettingsIcon /> الإعدادات
-              </Button>
+              <Button variant="outline"><HomeIcon /> الرئيسية</Button>
+              <Button variant="outline"><UserIcon /> الحساب</Button>
+              <Button variant="outline"><SettingsIcon /> الإعدادات</Button>
             </ButtonGroup>
           </Row>
         </Section>
 
-        {/* ========== BADGE ========== */}
         <Section id="badge" title="Badge">
           <Row label="Variants">
             {badgeVariants.map((v) => (
-              <Badge key={v} variant={v}>
-                {v}
-              </Badge>
+              <Badge key={v} variant={v}>{v}</Badge>
             ))}
           </Row>
           <Row label="مع أيقونات">
-            <Badge>
-              <CheckIcon /> مكتمل
-            </Badge>
-            <Badge variant="secondary">
-              <BellIcon /> 3 إشعارات
-            </Badge>
-            <Badge variant="destructive">
-              <AlertCircleIcon /> خطأ
-            </Badge>
+            <Badge><CheckIcon /> مكتمل</Badge>
+            <Badge variant="secondary"><BellIcon /> 3 إشعارات</Badge>
+            <Badge variant="destructive"><AlertCircleIcon /> خطأ</Badge>
           </Row>
         </Section>
 
-        {/* ========== INPUT / TEXTAREA / LABEL ========== */}
         <Section id="input" title="Input / Textarea / Label">
           <div className="grid max-w-lg gap-3">
             <div className="grid gap-1.5">
@@ -376,12 +341,7 @@ export function ThemePage() {
           </div>
         </Section>
 
-        {/* ========== FIELD ========== */}
-        <Section
-          id="field"
-          title="Field"
-          description="غلاف الحقل الجديد مع label, description, و error"
-        >
+        <Section id="field" title="Field" description="مع label و description و error">
           <FieldSet>
             <FieldLegend>المعلومات الشخصية</FieldLegend>
             <FieldGroup>
@@ -407,30 +367,22 @@ export function ThemePage() {
           </FieldSet>
         </Section>
 
-        {/* ========== INPUT GROUP ========== */}
-        <Section id="input-group" title="Input Group" description="حقول إدخال مع addons وأزرار">
+        <Section id="input-group" title="Input Group">
           <div className="grid max-w-lg gap-3">
             <Field>
               <FieldLabel htmlFor="ig-search">بحث</FieldLabel>
               <InputGroup>
-                <InputGroupAddon>
-                  <SearchIcon />
-                </InputGroupAddon>
+                <InputGroupAddon><SearchIcon /></InputGroupAddon>
                 <InputGroupInput id="ig-search" placeholder="ابحث عن أي شيء..." />
                 <InputGroupAddon align="inline-end">
-                  <KbdGroup>
-                    <Kbd>⌘</Kbd>
-                    <Kbd>K</Kbd>
-                  </KbdGroup>
+                  <KbdGroup><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup>
                 </InputGroupAddon>
               </InputGroup>
             </Field>
             <Field>
               <FieldLabel htmlFor="ig-mail">بريد</FieldLabel>
               <InputGroup>
-                <InputGroupAddon>
-                  <AtSignIcon />
-                </InputGroupAddon>
+                <InputGroupAddon><AtSignIcon /></InputGroupAddon>
                 <InputGroupInput id="ig-mail" placeholder="username" />
                 <InputGroupText>@example.com</InputGroupText>
               </InputGroup>
@@ -440,9 +392,7 @@ export function ThemePage() {
               <InputGroup>
                 <InputGroupInput id="ig-pass" type="password" placeholder="••••••••" />
                 <InputGroupAddon align="inline-end">
-                  <InputGroupButton aria-label="toggle visibility">
-                    <EyeIcon />
-                  </InputGroupButton>
+                  <InputGroupButton aria-label="toggle visibility"><EyeIcon /></InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
             </Field>
@@ -451,16 +401,13 @@ export function ThemePage() {
               <InputGroup>
                 <InputGroupTextarea id="ig-textarea" placeholder="اكتب رسالتك..." />
                 <InputGroupAddon align="block-end">
-                  <InputGroupButton size="xs">
-                    <SendIcon /> إرسال
-                  </InputGroupButton>
+                  <InputGroupButton size="xs"><SendIcon /> إرسال</InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
             </Field>
           </div>
         </Section>
 
-        {/* ========== INPUT OTP ========== */}
         <Section id="input-otp" title="Input OTP">
           <InputOTP maxLength={6} value={otp} onChange={setOtp}>
             <InputOTPGroup>
@@ -478,57 +425,29 @@ export function ThemePage() {
           <p className="text-muted-foreground text-sm">القيمة: {otp || "—"}</p>
         </Section>
 
-        {/* ========== CHECKBOX / RADIO / SWITCH ========== */}
         <Section id="checkbox-radio-switch" title="Checkbox / Radio / Switch">
           <Row label="Checkbox">
-            <div className="flex items-center gap-2">
-              <Checkbox id="c1" defaultChecked />
-              <Label htmlFor="c1">مفعّل</Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Checkbox id="c2" />
-              <Label htmlFor="c2">غير مفعّل</Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Checkbox id="c3" disabled />
-              <Label htmlFor="c3">معطّل</Label>
-            </div>
+            <div className="flex items-center gap-2"><Checkbox id="c1" defaultChecked /><Label htmlFor="c1">مفعّل</Label></div>
+            <div className="flex items-center gap-2"><Checkbox id="c2" /><Label htmlFor="c2">غير مفعّل</Label></div>
+            <div className="flex items-center gap-2"><Checkbox id="c3" disabled /><Label htmlFor="c3">معطّل</Label></div>
           </Row>
           <Row label="Radio Group">
             <RadioGroup defaultValue="b" className="flex gap-4">
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="a" id="r-a" />
-                <Label htmlFor="r-a">خيار أ</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="b" id="r-b" />
-                <Label htmlFor="r-b">خيار ب</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="c" id="r-c" />
-                <Label htmlFor="r-c">خيار ج</Label>
-              </div>
+              <div className="flex items-center gap-2"><RadioGroupItem value="a" id="r-a" /><Label htmlFor="r-a">خيار أ</Label></div>
+              <div className="flex items-center gap-2"><RadioGroupItem value="b" id="r-b" /><Label htmlFor="r-b">خيار ب</Label></div>
+              <div className="flex items-center gap-2"><RadioGroupItem value="c" id="r-c" /><Label htmlFor="r-c">خيار ج</Label></div>
             </RadioGroup>
           </Row>
           <Row label="Switch">
-            <div className="flex items-center gap-2">
-              <Switch id="s1" defaultChecked />
-              <Label htmlFor="s1">إشعارات</Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Switch id="s2" />
-              <Label htmlFor="s2">الوضع الليلي</Label>
-            </div>
+            <div className="flex items-center gap-2"><Switch id="s1" defaultChecked /><Label htmlFor="s1">إشعارات</Label></div>
+            <div className="flex items-center gap-2"><Switch id="s2" /><Label htmlFor="s2">الوضع الليلي</Label></div>
           </Row>
         </Section>
 
-        {/* ========== SELECT / NATIVE SELECT ========== */}
         <Section id="select" title="Select / Native Select">
           <Row label="Select">
             <Select>
-              <SelectTrigger className="w-56">
-                <SelectValue placeholder="اختر فاكهة" />
-              </SelectTrigger>
+              <SelectTrigger className="w-56"><SelectValue placeholder="اختر فاكهة" /></SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>فواكه</SelectLabel>
@@ -542,9 +461,7 @@ export function ThemePage() {
           </Row>
           <Row label="Native Select">
             <NativeSelect className="w-56" defaultValue="">
-              <option value="" disabled>
-                اختر دولة
-              </option>
+              <option value="" disabled>اختر دولة</option>
               <NativeSelectOption value="eg">مصر</NativeSelectOption>
               <NativeSelectOption value="sa">السعودية</NativeSelectOption>
               <NativeSelectOption value="ae">الإمارات</NativeSelectOption>
@@ -552,7 +469,6 @@ export function ThemePage() {
           </Row>
         </Section>
 
-        {/* ========== SLIDER / PROGRESS ========== */}
         <Section id="slider-progress" title="Slider / Progress">
           <div className="space-y-3">
             <Label>Slider — قيمة: {sliderVal[0]}</Label>
@@ -562,42 +478,25 @@ export function ThemePage() {
             <div className="flex items-center justify-between">
               <Label>Progress — {progress}%</Label>
               <ButtonGroup>
-                <Button size="xs" variant="outline" onClick={() => setProgress((p) => Math.max(0, p - 10))}>
-                  −
-                </Button>
-                <Button size="xs" variant="outline" onClick={() => setProgress((p) => Math.min(100, p + 10))}>
-                  +
-                </Button>
+                <Button size="xs" variant="outline" onClick={() => setProgress((p) => Math.max(0, p - 10))}>−</Button>
+                <Button size="xs" variant="outline" onClick={() => setProgress((p) => Math.min(100, p + 10))}>+</Button>
               </ButtonGroup>
             </div>
             <Progress value={progress} />
           </div>
         </Section>
 
-        {/* ========== TOGGLE / TOGGLE GROUP ========== */}
         <Section id="toggle" title="Toggle / Toggle Group">
           <Row label="Toggle">
-            <Toggle aria-label="bold">
-              <BoldIcon />
-            </Toggle>
-            <Toggle aria-label="italic" defaultPressed>
-              <ItalicIcon />
-            </Toggle>
-            <Toggle aria-label="underline" variant="outline">
-              <UnderlineIcon />
-            </Toggle>
+            <Toggle aria-label="bold"><BoldIcon /></Toggle>
+            <Toggle aria-label="italic" defaultPressed><ItalicIcon /></Toggle>
+            <Toggle aria-label="underline" variant="outline"><UnderlineIcon /></Toggle>
           </Row>
           <Row label="Toggle Group (single)">
             <ToggleGroup type="single" defaultValue="bold">
-              <ToggleGroupItem value="bold" aria-label="bold">
-                <BoldIcon />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="italic" aria-label="italic">
-                <ItalicIcon />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="underline" aria-label="underline">
-                <UnderlineIcon />
-              </ToggleGroupItem>
+              <ToggleGroupItem value="bold" aria-label="bold"><BoldIcon /></ToggleGroupItem>
+              <ToggleGroupItem value="italic" aria-label="italic"><ItalicIcon /></ToggleGroupItem>
+              <ToggleGroupItem value="underline" aria-label="underline"><UnderlineIcon /></ToggleGroupItem>
             </ToggleGroup>
           </Row>
           <Row label="Toggle Group (multiple)">
@@ -609,29 +508,15 @@ export function ThemePage() {
           </Row>
         </Section>
 
-        {/* ========== AVATAR ========== */}
         <Section id="avatar" title="Avatar">
           <Row label="مقاسات">
-            <Avatar className="size-8">
-              <AvatarFallback>ND</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>SC</AvatarFallback>
-            </Avatar>
-            <Avatar className="size-12">
-              <AvatarFallback>
-                <UserIcon />
-              </AvatarFallback>
-            </Avatar>
-            <Avatar className="size-16">
-              <AvatarImage src="https://github.com/vercel.png" alt="vercel" />
-              <AvatarFallback>VC</AvatarFallback>
-            </Avatar>
+            <Avatar className="size-8"><AvatarFallback>ND</AvatarFallback></Avatar>
+            <Avatar><AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /><AvatarFallback>SC</AvatarFallback></Avatar>
+            <Avatar className="size-12"><AvatarFallback><UserIcon /></AvatarFallback></Avatar>
+            <Avatar className="size-16"><AvatarImage src="https://github.com/vercel.png" alt="vercel" /><AvatarFallback>VC</AvatarFallback></Avatar>
           </Row>
         </Section>
 
-        {/* ========== ALERT ========== */}
         <Section id="alert" title="Alert">
           <Alert>
             <InfoIcon />
@@ -642,110 +527,56 @@ export function ThemePage() {
             <AlertCircleIcon />
             <AlertTitle>حدث خطأ</AlertTitle>
             <AlertDescription>تعذّر إكمال العملية، حاول مرة أخرى.</AlertDescription>
-            <AlertAction>
-              <Button size="sm" variant="outline">
-                إعادة المحاولة
-              </Button>
-            </AlertAction>
+            <AlertAction><Button size="sm" variant="outline">إعادة المحاولة</Button></AlertAction>
           </Alert>
         </Section>
 
-        {/* ========== EMPTY ========== */}
         <Section id="empty" title="Empty">
           <Empty>
             <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <InboxIcon />
-              </EmptyMedia>
+              <EmptyMedia variant="icon"><InboxIcon /></EmptyMedia>
               <EmptyTitle>لا توجد رسائل</EmptyTitle>
               <EmptyDescription>عندما يصلك بريد جديد سيظهر هنا.</EmptyDescription>
             </EmptyHeader>
-            <EmptyContent>
-              <Button>
-                <PlusIcon />
-                إنشاء رسالة
-              </Button>
-            </EmptyContent>
+            <EmptyContent><Button><PlusIcon />إنشاء رسالة</Button></EmptyContent>
           </Empty>
         </Section>
 
-        {/* ========== ITEM ========== */}
-        <Section id="item" title="Item" description="عناصر القوائم بصيغ مختلفة">
+        <Section id="item" title="Item">
           <ItemGroup>
             <Item>
-              <ItemMedia>
-                <FolderIcon />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>المستندات</ItemTitle>
-                <ItemDescription>12 ملف</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Button size="icon-sm" variant="ghost" aria-label="more">
-                  <MoreHorizontalIcon />
-                </Button>
-              </ItemActions>
+              <ItemMedia><FolderIcon /></ItemMedia>
+              <ItemContent><ItemTitle>المستندات</ItemTitle><ItemDescription>12 ملف</ItemDescription></ItemContent>
+              <ItemActions><Button size="icon-sm" variant="ghost" aria-label="more"><MoreHorizontalIcon /></Button></ItemActions>
             </Item>
             <ItemSeparator />
             <Item variant="muted">
-              <ItemMedia variant="icon">
-                <FileIcon />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>تقرير.pdf</ItemTitle>
-                <ItemDescription>2.3 ميجا</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Badge variant="secondary">جديد</Badge>
-              </ItemActions>
+              <ItemMedia variant="icon"><FileIcon /></ItemMedia>
+              <ItemContent><ItemTitle>تقرير.pdf</ItemTitle><ItemDescription>2.3 ميجا</ItemDescription></ItemContent>
+              <ItemActions><Badge variant="secondary">جديد</Badge></ItemActions>
             </Item>
             <ItemSeparator />
             <Item variant="outline">
-              <ItemMedia>
-                <Avatar>
-                  <AvatarFallback>أم</AvatarFallback>
-                </Avatar>
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>أحمد محمود</ItemTitle>
-                <ItemDescription>أرسل لك رسالة جديدة</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Button size="sm" variant="outline">
-                  عرض
-                </Button>
-              </ItemActions>
+              <ItemMedia><Avatar><AvatarFallback>أم</AvatarFallback></Avatar></ItemMedia>
+              <ItemContent><ItemTitle>أحمد محمود</ItemTitle><ItemDescription>أرسل لك رسالة جديدة</ItemDescription></ItemContent>
+              <ItemActions><Button size="sm" variant="outline">عرض</Button></ItemActions>
             </Item>
           </ItemGroup>
         </Section>
 
-        {/* ========== TABS ========== */}
         <Section id="tabs" title="Tabs">
           <Tabs defaultValue="account" className="w-full max-w-lg">
             <TabsList>
-              <TabsTrigger value="account">
-                <UserIcon /> الحساب
-              </TabsTrigger>
-              <TabsTrigger value="password">
-                <SettingsIcon /> كلمة السر
-              </TabsTrigger>
-              <TabsTrigger value="billing">
-                <CreditCardIcon /> الفواتير
-              </TabsTrigger>
+              <TabsTrigger value="account"><UserIcon /> الحساب</TabsTrigger>
+              <TabsTrigger value="password"><SettingsIcon /> كلمة السر</TabsTrigger>
+              <TabsTrigger value="billing"><CreditCardIcon /> الفواتير</TabsTrigger>
             </TabsList>
-            <TabsContent value="account" className="mt-3">
-              <p className="text-muted-foreground text-sm">إعدادات حسابك تظهر هنا.</p>
-            </TabsContent>
-            <TabsContent value="password" className="mt-3">
-              <p className="text-muted-foreground text-sm">قم بتغيير كلمة السر.</p>
-            </TabsContent>
-            <TabsContent value="billing" className="mt-3">
-              <p className="text-muted-foreground text-sm">طرق الدفع والفواتير.</p>
-            </TabsContent>
+            <TabsContent value="account" className="mt-3"><p className="text-muted-foreground text-sm">إعدادات حسابك تظهر هنا.</p></TabsContent>
+            <TabsContent value="password" className="mt-3"><p className="text-muted-foreground text-sm">قم بتغيير كلمة السر.</p></TabsContent>
+            <TabsContent value="billing" className="mt-3"><p className="text-muted-foreground text-sm">طرق الدفع والفواتير.</p></TabsContent>
           </Tabs>
         </Section>
 
-        {/* ========== TABLE ========== */}
         <Section id="table" title="Table">
           <Table>
             <TableCaption>قائمة الفواتير الأخيرة.</TableCaption>
@@ -758,91 +589,43 @@ export function ThemePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">INV001</TableCell>
-                <TableCell>
-                  <Badge>مدفوع</Badge>
-                </TableCell>
-                <TableCell>بطاقة ائتمان</TableCell>
-                <TableCell className="text-end">$250.00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">INV002</TableCell>
-                <TableCell>
-                  <Badge variant="secondary">معلّق</Badge>
-                </TableCell>
-                <TableCell>تحويل بنكي</TableCell>
-                <TableCell className="text-end">$150.00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">INV003</TableCell>
-                <TableCell>
-                  <Badge variant="destructive">ملغي</Badge>
-                </TableCell>
-                <TableCell>PayPal</TableCell>
-                <TableCell className="text-end">$80.00</TableCell>
-              </TableRow>
+              <TableRow><TableCell className="font-medium">INV001</TableCell><TableCell><Badge>مدفوع</Badge></TableCell><TableCell>بطاقة ائتمان</TableCell><TableCell className="text-end">$250.00</TableCell></TableRow>
+              <TableRow><TableCell className="font-medium">INV002</TableCell><TableCell><Badge variant="secondary">معلّق</Badge></TableCell><TableCell>تحويل بنكي</TableCell><TableCell className="text-end">$150.00</TableCell></TableRow>
+              <TableRow><TableCell className="font-medium">INV003</TableCell><TableCell><Badge variant="destructive">ملغي</Badge></TableCell><TableCell>PayPal</TableCell><TableCell className="text-end">$80.00</TableCell></TableRow>
             </TableBody>
             <TableFooter>
-              <TableRow>
-                <TableCell colSpan={3}>الإجمالي</TableCell>
-                <TableCell className="text-end">$480.00</TableCell>
-              </TableRow>
+              <TableRow><TableCell colSpan={3}>الإجمالي</TableCell><TableCell className="text-end">$480.00</TableCell></TableRow>
             </TableFooter>
           </Table>
         </Section>
 
-        {/* ========== ACCORDION ========== */}
         <Section id="accordion" title="Accordion">
           <Accordion type="single" collapsible className="w-full max-w-lg">
-            <AccordionItem value="a">
-              <AccordionTrigger>هل المشروع متاح؟</AccordionTrigger>
-              <AccordionContent>نعم، متاح ومجاني.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="b">
-              <AccordionTrigger>هل يدعم RTL؟</AccordionTrigger>
-              <AccordionContent>نعم، عبر DirectionProvider بشكل كامل.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="c">
-              <AccordionTrigger>هل يدعم Dark Mode؟</AccordionTrigger>
-              <AccordionContent>اضغط حرف d على الكيبورد للتبديل.</AccordionContent>
-            </AccordionItem>
+            <AccordionItem value="a"><AccordionTrigger>هل المشروع متاح؟</AccordionTrigger><AccordionContent>نعم، متاح ومجاني.</AccordionContent></AccordionItem>
+            <AccordionItem value="b"><AccordionTrigger>هل يدعم RTL؟</AccordionTrigger><AccordionContent>نعم، عبر DirectionProvider بشكل كامل.</AccordionContent></AccordionItem>
+            <AccordionItem value="c"><AccordionTrigger>هل يدعم Dark Mode؟</AccordionTrigger><AccordionContent>اضغط حرف d على الكيبورد للتبديل.</AccordionContent></AccordionItem>
           </Accordion>
         </Section>
 
-        {/* ========== COLLAPSIBLE ========== */}
         <Section id="collapsible" title="Collapsible">
           <Collapsible className="w-full max-w-lg">
             <CollapsibleTrigger asChild>
-              <Button variant="outline">
-                <ChevronRightIcon className="rtl:-scale-x-100" />
-                اضغط لإظهار المزيد
-              </Button>
+              <Button variant="outline"><ChevronRightIcon className="rtl:-scale-x-100" />اضغط لإظهار المزيد</Button>
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-2">
-              <div className="border-border rounded-md border p-3 text-sm">
-                محتوى مخفي يظهر عند الضغط.
-              </div>
+              <div className="border-border rounded-md border p-3 text-sm">محتوى مخفي يظهر عند الضغط.</div>
             </CollapsibleContent>
           </Collapsible>
         </Section>
 
-        {/* ========== DIALOG / SHEET / ALERT-DIALOG ========== */}
         <Section id="overlays" title="Dialog / Sheet / AlertDialog">
           <Row label="Dialog">
             <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline">فتح Dialog</Button>
-              </DialogTrigger>
+              <DialogTrigger asChild><Button variant="outline">فتح Dialog</Button></DialogTrigger>
               <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>تأكيد العملية</DialogTitle>
-                  <DialogDescription>هل أنت متأكد من المتابعة؟</DialogDescription>
-                </DialogHeader>
+                <DialogHeader><DialogTitle>تأكيد العملية</DialogTitle><DialogDescription>هل أنت متأكد من المتابعة؟</DialogDescription></DialogHeader>
                 <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">إلغاء</Button>
-                  </DialogClose>
+                  <DialogClose asChild><Button variant="outline">إلغاء</Button></DialogClose>
                   <Button>متابعة</Button>
                 </DialogFooter>
               </DialogContent>
@@ -850,229 +633,120 @@ export function ThemePage() {
           </Row>
           <Row label="Sheet">
             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline">فتح Sheet (يمين)</Button>
-              </SheetTrigger>
+              <SheetTrigger asChild><Button variant="outline">فتح Sheet (يمين)</Button></SheetTrigger>
               <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>الإعدادات</SheetTitle>
-                  <SheetDescription>قم بتعديل تفضيلاتك من هنا.</SheetDescription>
-                </SheetHeader>
+                <SheetHeader><SheetTitle>الإعدادات</SheetTitle><SheetDescription>قم بتعديل تفضيلاتك من هنا.</SheetDescription></SheetHeader>
                 <div className="p-4">محتوى الـ Sheet</div>
-                <SheetFooter>
-                  <Button>حفظ</Button>
-                </SheetFooter>
+                <SheetFooter><Button>حفظ</Button></SheetFooter>
               </SheetContent>
             </Sheet>
             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline">فتح Sheet (يسار)</Button>
-              </SheetTrigger>
-              <SheetContent side="left">
-                <SheetHeader>
-                  <SheetTitle>قائمة جانبية</SheetTitle>
-                </SheetHeader>
-              </SheetContent>
+              <SheetTrigger asChild><Button variant="outline">فتح Sheet (يسار)</Button></SheetTrigger>
+              <SheetContent side="left"><SheetHeader><SheetTitle>قائمة جانبية</SheetTitle></SheetHeader></SheetContent>
             </Sheet>
           </Row>
           <Row label="Alert Dialog">
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive">
-                  <TrashIcon /> حذف
-                </Button>
-              </AlertDialogTrigger>
+              <AlertDialogTrigger asChild><Button variant="destructive"><TrashIcon /> حذف</Button></AlertDialogTrigger>
               <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>هل أنت متأكد؟</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    لا يمكن التراجع عن هذا الإجراء.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>إلغاء</AlertDialogCancel>
-                  <AlertDialogAction>حذف</AlertDialogAction>
-                </AlertDialogFooter>
+                <AlertDialogHeader><AlertDialogTitle>هل أنت متأكد؟</AlertDialogTitle><AlertDialogDescription>لا يمكن التراجع عن هذا الإجراء.</AlertDialogDescription></AlertDialogHeader>
+                <AlertDialogFooter><AlertDialogCancel>إلغاء</AlertDialogCancel><AlertDialogAction>حذف</AlertDialogAction></AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </Row>
         </Section>
 
-        {/* ========== POPOVER / HOVER CARD / TOOLTIP ========== */}
         <Section id="popover-tooltip" title="Popover / HoverCard / Tooltip">
           <Row label="Popover">
             <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline">
-                  <PaletteIcon /> الألوان
-                </Button>
-              </PopoverTrigger>
+              <PopoverTrigger asChild><Button variant="outline"><PaletteIcon /> الألوان</Button></PopoverTrigger>
               <PopoverContent className="w-60">
-                <div className="space-y-2">
-                  <p className="font-medium text-sm">إعدادات اللون</p>
-                  <p className="text-muted-foreground text-xs">
-                    محتوى يظهر داخل Popover مع توضيح بسيط.
-                  </p>
-                </div>
+                <div className="space-y-2"><p className="font-medium text-sm">إعدادات اللون</p><p className="text-muted-foreground text-xs">محتوى يظهر داخل Popover.</p></div>
               </PopoverContent>
             </Popover>
           </Row>
           <Row label="Hover Card">
             <HoverCard>
-              <HoverCardTrigger asChild>
-                <Button variant="link">@shadcn</Button>
-              </HoverCardTrigger>
+              <HoverCardTrigger asChild><Button variant="link">@shadcn</Button></HoverCardTrigger>
               <HoverCardContent className="w-72">
                 <div className="flex gap-3">
-                  <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>SC</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-sm font-semibold">@shadcn</p>
-                    <p className="text-muted-foreground text-xs">منشئ shadcn/ui.</p>
-                  </div>
+                  <Avatar><AvatarImage src="https://github.com/shadcn.png" /><AvatarFallback>SC</AvatarFallback></Avatar>
+                  <div><p className="text-sm font-semibold">@shadcn</p><p className="text-muted-foreground text-xs">منشئ shadcn/ui.</p></div>
                 </div>
               </HoverCardContent>
             </HoverCard>
           </Row>
           <Row label="Tooltip">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" aria-label="copy">
-                  <CopyIcon />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>نسخ</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" aria-label="favorite">
-                  <HeartIcon />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>إضافة للمفضلة</TooltipContent>
-            </Tooltip>
+            <Tooltip><TooltipTrigger asChild><Button variant="outline" size="icon" aria-label="copy"><CopyIcon /></Button></TooltipTrigger><TooltipContent>نسخ</TooltipContent></Tooltip>
+            <Tooltip><TooltipTrigger asChild><Button variant="outline" size="icon" aria-label="favorite"><HeartIcon /></Button></TooltipTrigger><TooltipContent>إضافة للمفضلة</TooltipContent></Tooltip>
           </Row>
         </Section>
 
-        {/* ========== DROPDOWN MENU ========== */}
         <Section id="dropdown-menu" title="Dropdown Menu">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                خيارات <ChevronRightIcon className="rtl:-scale-x-100" />
-              </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild><Button variant="outline">خيارات <ChevronRightIcon className="rtl:-scale-x-100" /></Button></DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>حسابي</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <UserIcon /> الملف الشخصي
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <SettingsIcon /> الإعدادات
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-              </DropdownMenuItem>
+              <DropdownMenuItem><UserIcon /> الملف الشخصي<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut></DropdownMenuItem>
+              <DropdownMenuItem><SettingsIcon /> الإعدادات<DropdownMenuShortcut>⌘S</DropdownMenuShortcut></DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem variant="destructive">
-                <LogOutIcon /> تسجيل الخروج
-              </DropdownMenuItem>
+              <DropdownMenuItem variant="destructive"><LogOutIcon /> تسجيل الخروج</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </Section>
 
-        {/* ========== BREADCRUMB / PAGINATION ========== */}
         <Section id="breadcrumb-pagination" title="Breadcrumb / Pagination">
           <Row label="Breadcrumb">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="#">الرئيسية</BreadcrumbLink>
-                </BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink href="#">الرئيسية</BreadcrumbLink></BreadcrumbItem>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="#">الإعدادات</BreadcrumbLink>
-                </BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink href="#">الإعدادات</BreadcrumbLink></BreadcrumbItem>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>الحساب</BreadcrumbPage>
-                </BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbPage>الحساب</BreadcrumbPage></BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </Row>
           <Row label="Pagination">
             <Pagination>
               <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious href="#" />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#" isActive>
-                    2
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">3</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext href="#" />
-                </PaginationItem>
+                <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+                <PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
+                <PaginationItem><PaginationLink href="#" isActive>2</PaginationLink></PaginationItem>
+                <PaginationItem><PaginationLink href="#">3</PaginationLink></PaginationItem>
+                <PaginationItem><PaginationEllipsis /></PaginationItem>
+                <PaginationItem><PaginationNext href="#" /></PaginationItem>
               </PaginationContent>
             </Pagination>
           </Row>
         </Section>
 
-        {/* ========== CARD ========== */}
         <Section id="card" title="Card">
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <CardTitle>عنوان البطاقة</CardTitle>
                 <CardDescription>وصف بسيط للبطاقة.</CardDescription>
-                <CardAction>
-                  <Button size="icon-sm" variant="ghost" aria-label="more">
-                    <MoreHorizontalIcon />
-                  </Button>
-                </CardAction>
+                <CardAction><Button size="icon-sm" variant="ghost" aria-label="more"><MoreHorizontalIcon /></Button></CardAction>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm">محتوى البطاقة الأساسي.</p>
-              </CardContent>
-              <CardFooter className="gap-2">
-                <Button>تأكيد</Button>
-                <Button variant="outline">إلغاء</Button>
-              </CardFooter>
+              <CardContent><p className="text-sm">محتوى البطاقة الأساسي.</p></CardContent>
+              <CardFooter className="gap-2"><Button>تأكيد</Button><Button variant="outline">إلغاء</Button></CardFooter>
             </Card>
             <Card>
-              <CardHeader>
-                <CardTitle>إحصائيات</CardTitle>
-                <CardDescription>هذا الشهر</CardDescription>
-              </CardHeader>
+              <CardHeader><CardTitle>إحصائيات</CardTitle><CardDescription>هذا الشهر</CardDescription></CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">الزوار</span>
-                  <Badge>12,453</Badge>
-                </div>
+                <div className="flex items-center justify-between"><span className="text-sm">الزوار</span><Badge>12,453</Badge></div>
                 <Progress value={68} />
               </CardContent>
             </Card>
           </div>
         </Section>
 
-        {/* ========== CALENDAR ========== */}
         <Section id="calendar" title="Calendar">
           <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
         </Section>
 
-        {/* ========== ASPECT RATIO / SCROLL AREA / SEPARATOR ========== */}
         <Section id="layout" title="Aspect Ratio / Scroll Area / Separator">
           <Row label="Aspect Ratio (16:9)">
             <div className="w-full max-w-md">
@@ -1092,24 +766,18 @@ export function ThemePage() {
             <ScrollArea className="border-border h-40 w-full max-w-md rounded-md border p-3">
               <div className="space-y-2">
                 {Array.from({ length: 20 }).map((_, i) => (
-                  <p key={i} className="text-sm">
-                    عنصر رقم {i + 1} داخل scroll area قابل للتمرير.
-                  </p>
+                  <p key={i} className="text-sm">عنصر رقم {i + 1} داخل scroll area قابل للتمرير.</p>
                 ))}
               </div>
             </ScrollArea>
           </Row>
         </Section>
 
-        {/* ========== SKELETON / SPINNER ========== */}
         <Section id="loading" title="Skeleton / Spinner">
           <Row label="Skeleton">
             <div className="flex w-full max-w-md items-center gap-3">
               <Skeleton className="size-12 rounded-full" />
-              <div className="flex-1 space-y-2">
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
-              </div>
+              <div className="flex-1 space-y-2"><Skeleton className="h-4 w-3/4" /><Skeleton className="h-4 w-1/2" /></div>
             </div>
           </Row>
           <Row label="Spinner">
@@ -1119,107 +787,27 @@ export function ThemePage() {
           </Row>
         </Section>
 
-        {/* ========== KBD ========== */}
         <Section id="kbd" title="Kbd">
           <Row label="مفاتيح">
-            <KbdGroup>
-              <Kbd>⌘</Kbd>
-              <Kbd>K</Kbd>
-            </KbdGroup>
-            <KbdGroup>
-              <Kbd>Ctrl</Kbd>
-              <span className="text-muted-foreground text-xs">+</span>
-              <Kbd>Shift</Kbd>
-              <span className="text-muted-foreground text-xs">+</span>
-              <Kbd>P</Kbd>
-            </KbdGroup>
+            <KbdGroup><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup>
+            <KbdGroup><Kbd>Ctrl</Kbd><span className="text-muted-foreground text-xs">+</span><Kbd>Shift</Kbd><span className="text-muted-foreground text-xs">+</span><Kbd>P</Kbd></KbdGroup>
             <Kbd>Esc</Kbd>
           </Row>
         </Section>
 
-        {/* ========== SONNER (TOAST) ========== */}
         <Section id="sonner" title="Sonner (Toast)">
           <Row label="إظهار توست">
-            <Button onClick={() => toast("تم بنجاح", { description: "هذا توست افتراضي." })}>
-              توست عادي
-            </Button>
-            <Button variant="secondary" onClick={() => toast.success("تم الحفظ بنجاح")}>
-              نجاح
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={() => toast.error("حدث خطأ", { description: "حاول مرة أخرى." })}
-            >
-              خطأ
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() =>
-                toast("هل تريد التراجع؟", {
-                  action: { label: "تراجع", onClick: () => toast("تم التراجع") },
-                })
-              }
-            >
-              مع زر إجراء
-            </Button>
+            <Button onClick={() => toast("تم بنجاح", { description: "هذا توست افتراضي." })}>توست عادي</Button>
+            <Button variant="secondary" onClick={() => toast.success("تم الحفظ بنجاح")}>نجاح</Button>
+            <Button variant="destructive" onClick={() => toast.error("حدث خطأ", { description: "حاول مرة أخرى." })}>خطأ</Button>
+            <Button variant="outline" onClick={() => toast("هل تريد التراجع؟", { action: { label: "تراجع", onClick: () => toast("تم التراجع") } })}>مع زر إجراء</Button>
           </Row>
         </Section>
 
-        {/* ========== TYPOGRAPHY / TOKENS ========== */}
-        <Section id="typography" title="Typography & Tokens">
-          <Row label="نصوص">
-            <div className="space-y-2">
-              <p className="text-4xl font-bold tracking-tight">عنوان كبير 4xl</p>
-              <p className="text-2xl font-semibold">عنوان 2xl</p>
-              <p className="text-lg">نص كبير</p>
-              <p className="text-base">نص أساسي</p>
-              <p className="text-muted-foreground text-sm">نص صغير ثانوي</p>
-            </div>
-          </Row>
-          <Row label="ألوان">
-            {[
-              { name: "primary", bg: "bg-primary", fg: "text-primary-foreground" },
-              { name: "secondary", bg: "bg-secondary", fg: "text-secondary-foreground" },
-              { name: "muted", bg: "bg-muted", fg: "text-muted-foreground" },
-              { name: "accent", bg: "bg-accent", fg: "text-accent-foreground" },
-              { name: "destructive", bg: "bg-destructive/10", fg: "text-destructive" },
-              { name: "card", bg: "bg-card border", fg: "text-card-foreground" },
-            ].map((c) => (
-              <div
-                key={c.name}
-                className={`${c.bg} ${c.fg} flex h-16 w-28 items-center justify-center rounded-md text-xs font-medium`}
-              >
-                {c.name}
-              </div>
-            ))}
-          </Row>
-        </Section>
-
-        {/* ========== LUCIDE ICONS SAMPLE ========== */}
         <Section id="icons" title="عيّنة من lucide-react">
           <Row label="أيقونات شائعة">
-            {[
-              HomeIcon,
-              UserIcon,
-              UsersIcon,
-              SettingsIcon,
-              BellIcon,
-              SearchIcon,
-              MailIcon,
-              CalendarIcon,
-              StarIcon,
-              HeartIcon,
-              FileIcon,
-              FolderIcon,
-              ImageIcon,
-              CreditCardIcon,
-              LayoutDashboardIcon,
-              ArrowRightIcon,
-            ].map((Icon, i) => (
-              <div
-                key={i}
-                className="border-border bg-muted/30 flex size-10 items-center justify-center rounded-md border"
-              >
+            {[HomeIcon, UserIcon, UsersIcon, SettingsIcon, BellIcon, SearchIcon, MailIcon, CalendarIcon, StarIcon, HeartIcon, FileIcon, FolderIcon, ImageIcon, CreditCardIcon, LayoutDashboardIcon, ArrowRightIcon].map((Icon, i) => (
+              <div key={i} className="border-border bg-muted/30 flex size-10 items-center justify-center rounded-md border">
                 <Icon className="size-4" />
               </div>
             ))}
