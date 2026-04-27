@@ -5,6 +5,7 @@ import { DashboardLayout } from "@/components/dashboard-layout"
 import LoginPage from "@/pages/login"
 import DashboardHome from "@/pages/dashboard"
 import ThemePage from "@/pages/theme"
+import UsersPermissionsPage from "@/pages/users-permissions"
 
 export function App() {
   return (
@@ -22,6 +23,7 @@ export function App() {
             }
           >
             <Route path="/dashboard" element={<DashboardHome />} />
+            <Route path="/users-permissions" element={<UsersPermissionsPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
