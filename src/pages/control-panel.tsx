@@ -15,10 +15,7 @@ import { toast } from "sonner"
 
 const cards = Array.from({ length: 8 }).map(() => ({
   title: "إجمالي المبيعات ( كاش )",
-  value: 85000,
-  unit: "ج.م.",
-  subtitle: "إجمالي المحصل النقدي",
-  data: [10, 26, 38, 22, 14, 20, 18, 28, 32],
+  unlinked: true as const,
 }))
 
 export function ControlPanelPage() {
