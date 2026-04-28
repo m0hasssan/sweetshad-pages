@@ -15,18 +15,13 @@ import { useAuth } from "@/contexts/auth-context"
 import { useTheme } from "@/components/theme-provider"
 import { toast } from "sonner"
 
-function getInitials(email: string | undefined) {
-  if (!email) return "؟"
-  return email.charAt(0).toUpperCase()
-}
-
-function getName(email: string | undefined) {
-  if (!email) return "مستخدم"
-  return email.split("@")[0]
+function getInitials(name: string | undefined) {
+  if (!name) return "؟"
+  return name.charAt(0).toUpperCase()
 }
 
 export function DashboardLayout() {
-  const { user, signOut } = useAuth()
+  const { user, displayName, signOut } = useAuth()
   const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const isDark =
