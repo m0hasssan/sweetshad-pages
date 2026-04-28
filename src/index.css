@@ -153,3 +153,13 @@
     background-color: var(--muted-foreground);
   }
 }
+
+@layer base {
+  /* Force placeholders to render right-aligned (RTL) globally */
+  input::placeholder,
+  textarea::placeholder {
+    text-align: right;
+    direction: rtl;
+    unicode-bidi: plaintext;
+  }
+}
