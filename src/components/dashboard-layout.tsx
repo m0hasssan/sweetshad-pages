@@ -54,7 +54,7 @@ export function DashboardLayout() {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="text-xs font-medium">
-                        {getInitials(user?.email)}
+                        {getInitials(displayName)}
                       </AvatarFallback>
                     </Avatar>
                   </button>
@@ -63,12 +63,12 @@ export function DashboardLayout() {
                   <div className="flex items-center gap-3 px-2 py-1.5">
                     <Avatar className="h-10 w-10 shrink-0">
                       <AvatarFallback className="text-sm font-medium">
-                        {getInitials(user?.email)}
+                        {getInitials(displayName)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-1 flex-col text-right">
                       <span className="truncate text-sm font-semibold">
-                        {getName(user?.email)}
+                        {displayName}
                       </span>
                       <span className="truncate text-xs text-muted-foreground" dir="ltr">
                         {user?.email}
