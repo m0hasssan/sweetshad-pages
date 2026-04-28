@@ -1,8 +1,10 @@
 import { Download, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { StatsCard } from "@/components/stats-card"
+import { PriceCard } from "@/components/price-card"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
+import { useGoldPrices, formatTimeAgoAr } from "@/hooks/use-gold-prices"
 import {
   Select,
   SelectContent,
@@ -20,9 +22,18 @@ const cards = Array.from({ length: 8 }).map(() => ({
 
 export function ControlPanelPage() {
   const { hasPermission, loading } = usePermissions()
+  const { data: goldData, loading: goldLoading } = useGoldPrices()
 
   const canView = hasPermission("view_dashboard")
   const canExport = hasPermission("export_data")
+
+  const getKaratPrice = (k: "24" | "21" | "18") => {
+    const v = goldData?.gold?.[k]
+    return v && typeof v === "object" ? (v as { sell: number }).sell : undefined
+  }
+  const goldSubtitle = goldData
+    ? `وفقاً لـ eDahab، ${formatTimeAgoAr(goldData.fetched_at)}`
+    : "وفقاً لـ eDahab"
 
   if (loading) {
     return (
@@ -83,6 +94,27 @@ export function ControlPanelPage() {
         }
       />
 
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <PriceCard
+          title="ذهب عيار 24"
+          value={getKaratPrice("24")}
+          loading={goldLoading}
+          subtitle={goldSubtitle}
+        />
+        <PriceCard
+          title="ذهب عيار 21"
+          value={getKaratPrice("21")}
+          loading={goldLoading}
+          subtitle={goldSubtitle}
+        />
+        <PriceCard
+          title="ذهب عيار 18"
+          value={getKaratPrice("18")}
+          loading={goldLoading}
+          subtitle={goldSubtitle}
+        />
+      </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {cards.map((c, i) => (
           <StatsCard key={i} {...c} />
@@ -91,5 +123,7 @@ export function ControlPanelPage() {
     </div>
   )
 }
+
+export default ControlPanelPage
 
 export default ControlPanelPage
