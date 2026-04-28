@@ -125,5 +125,3 @@ export function ControlPanelPage() {
 }
 
 export default ControlPanelPage
-
-export default ControlPanelPage
