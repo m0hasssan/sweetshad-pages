@@ -2,13 +2,8 @@ import { Hand } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAuth } from "@/contexts/auth-context"
 
-function getName(email: string | undefined) {
-  if (!email) return "مستخدم"
-  return email.split("@")[0]
-}
-
 export function DashboardHome() {
-  const { user } = useAuth()
+  const { displayName } = useAuth()
 
   return (
     <div className="mx-auto max-w-3xl">
