@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { AuthProvider } from "@/contexts/auth-context"
+import { PermissionsProvider } from "@/contexts/permissions-context"
 import { ProtectedRoute } from "@/components/protected-route"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import LoginPage from "@/pages/login"
@@ -12,6 +13,7 @@ export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <PermissionsProvider>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<LoginPage />} />
@@ -29,6 +31,7 @@ export function App() {
           </Route>
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
+        </PermissionsProvider>
       </AuthProvider>
     </BrowserRouter>
   )
