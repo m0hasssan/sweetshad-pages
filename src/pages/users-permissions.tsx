@@ -409,7 +409,7 @@ export function UsersPermissionsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="-mx-4 flex-1 space-y-4 overflow-y-auto px-4 py-2">
+          <div className="scrollbar-thin -me-2 min-w-0 flex-1 space-y-4 overflow-y-auto pe-2 py-1">
             <div className="flex items-center justify-between rounded-md border p-3">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-primary" />
