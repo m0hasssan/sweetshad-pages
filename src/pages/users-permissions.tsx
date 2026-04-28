@@ -518,7 +518,7 @@ export function UsersPermissionsPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="-mx-4 flex-1 space-y-4 overflow-y-auto px-4 py-2">
+          <div className="scrollbar-thin -me-2 min-w-0 flex-1 space-y-4 overflow-y-auto pe-2 py-1">
             <div className="space-y-2">
               <Label htmlFor="new-fullname">الاسم الكامل</Label>
               <Input
