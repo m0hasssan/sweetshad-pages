@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      gold_prices: {
+        Row: {
+          buy: number | null
+          fetched_at: string
+          id: string
+          karat: string
+          sell: number | null
+          updated_at: string
+        }
+        Insert: {
+          buy?: number | null
+          fetched_at?: string
+          id?: string
+          karat: string
+          sell?: number | null
+          updated_at?: string
+        }
+        Update: {
+          buy?: number | null
+          fetched_at?: string
+          id?: string
+          karat?: string
+          sell?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
