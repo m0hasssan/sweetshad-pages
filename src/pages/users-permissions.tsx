@@ -114,7 +114,7 @@ function togglePermSafe(
 
 
 export function UsersPermissionsPage() {
-  const { isAdmin, hasPermission, loading: permLoading } = usePermissions()
+  const { isAdmin, hasPermission, loading: permLoading, refresh: refreshPerms } = usePermissions()
   const canManage = isAdmin || hasPermission("manage_users")
   const canCreate = isAdmin || hasPermission("create_users")
   const [users, setUsers] = React.useState<UserRow[]>([])
@@ -276,6 +276,7 @@ export function UsersPermissionsPage() {
       toast.success("تم حفظ التغييرات")
       setEditing(null)
       await loadUsers()
+      await refreshPerms()
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "حدث خطأ"
       toast.error(msg)
