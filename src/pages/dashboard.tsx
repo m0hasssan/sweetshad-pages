@@ -2,13 +2,8 @@ import { Hand } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAuth } from "@/contexts/auth-context"
 
-function getName(email: string | undefined) {
-  if (!email) return "مستخدم"
-  return email.split("@")[0]
-}
-
 export function DashboardHome() {
-  const { user } = useAuth()
+  const { displayName } = useAuth()
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -18,7 +13,7 @@ export function DashboardHome() {
             <Hand className="h-8 w-8" />
           </div>
           <h2 className="text-2xl font-semibold">
-            مرحباً، {getName(user?.email)}
+            مرحباً، {displayName}
           </h2>
           <p className="max-w-md text-sm text-muted-foreground">
             قم بتصفح القائمة الجانبية لعرض الأقسام المتاحة لك

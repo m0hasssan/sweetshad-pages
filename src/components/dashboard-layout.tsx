@@ -15,18 +15,13 @@ import { useAuth } from "@/contexts/auth-context"
 import { useTheme } from "@/components/theme-provider"
 import { toast } from "sonner"
 
-function getInitials(email: string | undefined) {
-  if (!email) return "؟"
-  return email.charAt(0).toUpperCase()
-}
-
-function getName(email: string | undefined) {
-  if (!email) return "مستخدم"
-  return email.split("@")[0]
+function getInitials(name: string | undefined) {
+  if (!name) return "؟"
+  return name.charAt(0).toUpperCase()
 }
 
 export function DashboardLayout() {
-  const { user, signOut } = useAuth()
+  const { user, displayName, signOut } = useAuth()
   const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const isDark =
@@ -59,7 +54,7 @@ export function DashboardLayout() {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="text-xs font-medium">
-                        {getInitials(user?.email)}
+                        {getInitials(displayName)}
                       </AvatarFallback>
                     </Avatar>
                   </button>
@@ -68,12 +63,12 @@ export function DashboardLayout() {
                   <div className="flex items-center gap-3 px-2 py-1.5">
                     <Avatar className="h-10 w-10 shrink-0">
                       <AvatarFallback className="text-sm font-medium">
-                        {getInitials(user?.email)}
+                        {getInitials(displayName)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-1 flex-col text-right">
                       <span className="truncate text-sm font-semibold">
-                        {getName(user?.email)}
+                        {displayName}
                       </span>
                       <span className="truncate text-xs text-muted-foreground" dir="ltr">
                         {user?.email}

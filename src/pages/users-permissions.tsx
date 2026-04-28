@@ -287,9 +287,13 @@ export function UsersPermissionsPage() {
 
   const handleDelete = async () => {
     if (!deleting) return
-    const { error } = await supabase.from("profiles").delete().eq("id", deleting.id)
-    if (error) {
-      toast.error("لا تملك صلاحية الحذف")
+    const { data, error } = await supabase.functions.invoke(
+      "admin-delete-user",
+      { body: { user_id: deleting.id } },
+    )
+    const payload = data as { error?: string; success?: boolean } | null
+    if (error || payload?.error) {
+      toast.error(payload?.error ?? "تعذر حذف المستخدم")
       return
     }
     toast.success(`تم حذف: ${deleting.full_name ?? deleting.email}`)
