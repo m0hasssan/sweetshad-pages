@@ -1,4 +1,4 @@
-import { Download, Lock } from "lucide-react"
+import { Download, Lock, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { StatsCard } from "@/components/stats-card"
 import { PriceCard } from "@/components/price-card"
@@ -22,7 +22,7 @@ const cards = Array.from({ length: 8 }).map(() => ({
 
 export function ControlPanelPage() {
   const { hasPermission, loading } = usePermissions()
-  const { data: goldData, loading: goldLoading } = useGoldPrices()
+  const { data: goldData, loading: goldLoading, refreshing: goldRefreshing, refresh: refreshGold } = useGoldPrices()
 
   const canView = hasPermission("view_dashboard")
   const canExport = hasPermission("export_data")
@@ -89,6 +89,18 @@ export function ControlPanelPage() {
             >
               <Download className="h-4 w-4" />
               استخراج البيانات
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={async () => {
+                await refreshGold()
+                toast.success("تم تحديث أسعار الذهب")
+              }}
+              disabled={goldRefreshing}
+              title="تحديث أسعار الذهب"
+            >
+              <RefreshCw className={`h-4 w-4 ${goldRefreshing ? "animate-spin" : ""}`} />
             </Button>
           </>
         }
